@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vansarah"
-version = "0.9.4"
+version = "0.9.5"
 description = "TTS"
 readme = "README.md"
 authors = [
@@ -36,4 +36,5 @@ only-packages = true
 [project.urls]
 Homepage = "https://github.com/mr-don88/vansarah"
 Repository = "https://github.com/mr-don88/vansarah"
+
 
