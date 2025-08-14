@@ -1,6 +1,6 @@
 # vansarah
 
-An inference library for [vansarah-82M](https://huggingface.co/spaces/MR-DON/Kokoro-TTS-ONNX). You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
+An inference library for [vansarah-82M](https://huggingface.co/spaces/MR-DON/vansarah-82M-v1.0-ONNX). You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
 
 > **vansarah** is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, vansarah can be deployed anywhere from production environments to personal projects.
 
@@ -116,5 +116,6 @@ dependencies:
       - vansarah>=0.3.1
       - soundfile
       - quangdon[en]
+
 
 
