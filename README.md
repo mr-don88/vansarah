@@ -5,7 +5,7 @@ An inference library for [vansarah-82M](https://huggingface.co/onnx-community/Ko
 > **vansarah** is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, vansarah can be deployed anywhere from production environments to personal projects.
 
 ### Usage
-You can run this basic cell on [Google Colab](https://colab.research.google.com/). [Listen to samples]([https://huggingface.co/mr-don88/vansarah-82M](https://huggingface.co/spaces/mr-don88/vansarah-82M)/blob/main/SAMPLES.md).
+You can run this basic cell on [Google Colab](https://colab.research.google.com/). [Listen to samples](https://huggingface.co/hexgrad/Kokoro-82M/blob/main/SAMPLES.md).
 ```py
 !pip install -q vansarah>=0.9.4 soundfile
 !apt-get -qq -y install espeak-ng > /dev/null 2>&1
@@ -116,6 +116,7 @@ dependencies:
       - vansarah>=0.3.1
       - soundfile
       - quangdon[en]
+
 
 
 
