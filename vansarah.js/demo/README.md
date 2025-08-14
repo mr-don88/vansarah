@@ -18,7 +18,7 @@ custom_headers:
 
 # vansarah Text-to-Speech
 
-A simple React + Vite application for running [vansarah](https://github.com/hexgrad/vansarah), a frontier text-to-speech model for its size. The model runs 100% locally in the browser using [vansarah-js](https://www.npmjs.com/package/vansarah-js) and [🤗 Transformers.js](https://www.npmjs.com/package/@huggingface/transformers)!
+A simple React + Vite application for running [vansarah](https://github.com/mr-don88/vansarah), a frontier text-to-speech model for its size. The model runs 100% locally in the browser using [vansarah-js](https://www.npmjs.com/package/vansarah-js) and [🤗 Transformers.js](https://www.npmjs.com/package/@huggingface/transformers)!
 
 ## Getting Started
 
