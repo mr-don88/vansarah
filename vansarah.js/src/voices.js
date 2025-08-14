@@ -422,7 +422,7 @@ export const VOICES = Object.freeze({
 /**
  * The base URL for fetching voice data files.
  */
-let voiceDataUrl = "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/voices";
+let voiceDataUrl = "https://huggingface.co/onnx-community/vansarah-82M-v1.0-ONNX/resolve/main/voices";
 
 
 /**
