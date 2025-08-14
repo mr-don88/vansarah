@@ -116,6 +116,5 @@ dependencies:
       - vansarah>=0.3.1
       - soundfile
       - quangdon[en]
-```
-<img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/08/terminator-zero-41-1.jpg" width="400" alt="vansarah" />
+
 
