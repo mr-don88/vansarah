@@ -15,7 +15,7 @@ import soundfile as sf
 import torch
 pipeline = KPipeline(lang_code='a')
 text = '''
-[vansarah](/kˈOkəɹO/) is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, [vansarah](/kˈOkəɹO/) can be deployed anywhere from production environments to personal projects.
+[vansarah](/vænˈsærə/) is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, [vansarah](/vænˈsærə/) can be deployed anywhere from production environments to personal projects.
 '''
 generator = pipeline(text, voice='af_heart')
 for i, (gs, ps, audio) in enumerate(generator):
@@ -43,9 +43,9 @@ import torch
 # 🇫🇷 'f' => French fr-fr
 # 🇮🇳 'h' => Hindi hi
 # 🇮🇹 'i' => Italian it
-# 🇯🇵 'j' => Japanese: pip install misaki[ja]
+# 🇯🇵 'j' => Japanese: pip install quangdon[ja]
 # 🇧🇷 'p' => Brazilian Portuguese pt-br
-# 🇨🇳 'z' => Mandarin Chinese: pip install misaki[zh]
+# 🇨🇳 'z' => Mandarin Chinese: pip install quangdon[zh]
 pipeline = KPipeline(lang_code='a') # <= make sure lang_code matches voice, reference above.
 
 # This text is for demonstration purposes only, unseen during training
@@ -56,7 +56,7 @@ It was a Sprawl voice and a Sprawl joke. The Chatsubo was a bar for professional
 
 These were to have an enormous impact, not only because they were associated with Constantine, but also because, as in so many other areas, the decisions taken by Constantine (or in his name) were to have great significance for centuries to come. One of the main issues was the shape that Christian churches were to take, since there was not, apparently, a tradition of monumental church buildings when Constantine decided to help the Christian church build a series of truly spectacular structures. The main form that these churches took was that of the basilica, a multipurpose rectangular structure, based ultimately on the earlier Greek stoa, which could be found in most of the great cities of the empire. Christianity, unlike classical polytheism, needed a large interior space for the celebration of its religious services, and the basilica aptly filled that need. We naturally do not know the degree to which the emperor was involved in the design of new churches, but it is tempting to connect this with the secular basilica that Constantine completed in the Roman forum (the so-called Basilica of Maxentius) and the one he probably built in Trier, in connection with his residence in the city at a time when he was still caesar.
 
-[vansarah](/kˈOkəɹO/) is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, [vansarah](/kˈOkəɹO/) can be deployed anywhere from production environments to personal projects.
+[vansarah](/vænˈsærə/) is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, [vansarah](/vænˈsærə/) can be deployed anywhere from production environments to personal projects.
 '''
 # text = '「もしおれがただ偶然、そしてこうしようというつもりでなくここに立っているのなら、ちょっとばかり絶望するところだな」と、そんなことが彼の頭に思い浮かんだ。'
 # text = '中國人民不信邪也不怕邪，不惹事也不怕事，任何外國不要指望我們會拿自己的核心利益做交易，不要指望我們會吞下損害我國主權、安全、發展利益的苦果！'
@@ -124,6 +124,7 @@ dependencies:
 - 📊 Thank you to everyone who contributed synthetic training data.
 - ❤️ Special thanks to all compute sponsors.
 - 👾 Discord server: https://discord.gg/QuGxSWBfQy
-- 🪽 vansarah is a Japanese word that translates to "heart" or "spirit". vansarah is also a [character in the Terminator franchise](https://terminator.fandom.com/wiki/vansarah) along with [Misaki](https://github.com/mr-don88/misaki?tab=readme-ov-file#acknowledgements).
+- 🪽 vansarah is a Japanese word that translates to "heart" or "spirit". vansarah is also a [character in the Terminator franchise](https://terminator.fandom.com/wiki/vansarah) along with [quangdon](https://github.com/mr-don88/quangdon?tab=readme-ov-file#acknowledgements).
 
 <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/08/terminator-zero-41-1.jpg" width="400" alt="vansarah" />
+
