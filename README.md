@@ -1,119 +1,129 @@
-# vansarah TTS
+# vansarah
 
-<p align="center">
-    <a href="https://www.npmjs.com/package/vansarah-js"><img alt="NPM" src="https://img.shields.io/npm/v/vansarah-js"></a>
-    <a href="https://www.npmjs.com/package/vansarah-js"><img alt="NPM Downloads" src="https://img.shields.io/npm/dw/vansarah-js"></a>
-    <a href="https://www.jsdelivr.com/package/npm/vansarah-js"><img alt="jsDelivr Hits" src="https://img.shields.io/jsdelivr/npm/hw/vansarah-js"></a>
-    <a href="https://github.com/mr-don88/vansarah/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/mr-don88/vansarah?color=blue"></a>
-    <a href="https://huggingface.co/spaces/webml-community/vansarah-webgpu"><img alt="Demo" src="https://img.shields.io/badge/Hugging_Face-demo-green"></a>
-</p>
+An inference library for [vansarah-82M](https://huggingface.co/mr-don88/vansarah-82M). You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
 
-vansarah is a frontier TTS model for its size of 82 million parameters (text in/audio out). This JavaScript library allows the model to be run 100% locally in the browser thanks to [🤗 Transformers.js](https://huggingface.co/docs/transformers.js). Try it out using our [online demo](https://huggingface.co/spaces/webml-community/vansarah-webgpu)!
+> **vansarah** is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, vansarah can be deployed anywhere from production environments to personal projects.
 
-## Usage
+### Usage
+You can run this basic cell on [Google Colab](https://colab.research.google.com/). [Listen to samples](https://huggingface.co/mr-don88/vansarah-82M/blob/main/SAMPLES.md).
+```py
+!pip install -q vansarah>=0.9.4 soundfile
+!apt-get -qq -y install espeak-ng > /dev/null 2>&1
+from vansarah import KPipeline
+from IPython.display import display, Audio
+import soundfile as sf
+import torch
+pipeline = KPipeline(lang_code='a')
+text = '''
+[vansarah](/vænˈsærə/) is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, [vansarah](/vænˈsærə/) can be deployed anywhere from production environments to personal projects.
+'''
+generator = pipeline(text, voice='af_heart')
+for i, (gs, ps, audio) in enumerate(generator):
+    print(i, gs, ps)
+    display(Audio(data=audio, rate=24000, autoplay=i==0))
+    sf.write(f'{i}.wav', audio, 24000)
+```
+Under the hood, `vansarah` uses [`quangdon`](https://pypi.org/project/quangdon/), a G2P library at https://github.com/mr-don88/quangdon
 
-First, install the `vansarah-js` library from [NPM](https://npmjs.com/package/vansarah-js) using:
+### Advanced Usage
+You can run this advanced cell on [Google Colab](https://colab.research.google.com/).
+```py
+# 1️⃣ Install vansarah
+!pip install -q vansarah>=0.9.4 soundfile
+# 2️⃣ Install espeak, used for English OOD fallback and some non-English languages
+!apt-get -qq -y install espeak-ng > /dev/null 2>&1
+
+# 3️⃣ Initalize a pipeline
+from vansarah import KPipeline
+from IPython.display import display, Audio
+import soundfile as sf
+import torch
+# 🇺🇸 'a' => American English, 🇬🇧 'b' => British English
+# 🇪🇸 'e' => Spanish es
+# 🇫🇷 'f' => French fr-fr
+# 🇮🇳 'h' => Hindi hi
+# 🇮🇹 'i' => Italian it
+# 🇯🇵 'j' => Japanese: pip install quangdon[ja]
+# 🇧🇷 'p' => Brazilian Portuguese pt-br
+# 🇨🇳 'z' => Mandarin Chinese: pip install quangdon[zh]
+pipeline = KPipeline(lang_code='a') # <= make sure lang_code matches voice, reference above.
+
+# This text is for demonstration purposes only, unseen during training
+text = '''
+The sky above the port was the color of television, tuned to a dead channel.
+"It's not like I'm using," Case heard someone say, as he shouldered his way through the crowd around the door of the Chat. "It's like my body's developed this massive drug deficiency."
+It was a Sprawl voice and a Sprawl joke. The Chatsubo was a bar for professional expatriates; you could drink there for a week and never hear two words in Japanese.
+
+These were to have an enormous impact, not only because they were associated with Constantine, but also because, as in so many other areas, the decisions taken by Constantine (or in his name) were to have great significance for centuries to come. One of the main issues was the shape that Christian churches were to take, since there was not, apparently, a tradition of monumental church buildings when Constantine decided to help the Christian church build a series of truly spectacular structures. The main form that these churches took was that of the basilica, a multipurpose rectangular structure, based ultimately on the earlier Greek stoa, which could be found in most of the great cities of the empire. Christianity, unlike classical polytheism, needed a large interior space for the celebration of its religious services, and the basilica aptly filled that need. We naturally do not know the degree to which the emperor was involved in the design of new churches, but it is tempting to connect this with the secular basilica that Constantine completed in the Roman forum (the so-called Basilica of Maxentius) and the one he probably built in Trier, in connection with his residence in the city at a time when he was still caesar.
+
+[vansarah](/vænˈsærə/) is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, [vansarah](/vænˈsærə/) can be deployed anywhere from production environments to personal projects.
+'''
+# text = '「もしおれがただ偶然、そしてこうしようというつもりでなくここに立っているのなら、ちょっとばかり絶望するところだな」と、そんなことが彼の頭に思い浮かんだ。'
+# text = '中國人民不信邪也不怕邪，不惹事也不怕事，任何外國不要指望我們會拿自己的核心利益做交易，不要指望我們會吞下損害我國主權、安全、發展利益的苦果！'
+# text = 'Los partidos políticos tradicionales compiten con los populismos y los movimientos asamblearios.'
+# text = 'Le dromadaire resplendissant déambulait tranquillement dans les méandres en mastiquant de petites feuilles vernissées.'
+# text = 'ट्रांसपोर्टरों की हड़ताल लगातार पांचवें दिन जारी, दिसंबर से इलेक्ट्रॉनिक टोल कलेक्शनल सिस्टम'
+# text = "Allora cominciava l'insonnia, o un dormiveglia peggiore dell'insonnia, che talvolta assumeva i caratteri dell'incubo."
+# text = 'Elabora relatórios de acompanhamento cronológico para as diferentes unidades do Departamento que propõem contratos.'
+
+# 4️⃣ Generate, display, and save audio files in a loop.
+generator = pipeline(
+    text, voice='af_heart', # <= change voice here
+    speed=1, split_pattern=r'\n+'
+)
+# Alternatively, load voice tensor directly:
+# voice_tensor = torch.load('path/to/voice.pt', weights_only=True)
+# generator = pipeline(
+#     text, voice=voice_tensor,
+#     speed=1, split_pattern=r'\n+'
+# )
+
+for i, (gs, ps, audio) in enumerate(generator):
+    print(i)  # i => index
+    print(gs) # gs => graphemes/text
+    print(ps) # ps => phonemes
+    display(Audio(data=audio, rate=24000, autoplay=i==0))
+    sf.write(f'{i}.wav', audio, 24000) # save each audio file
+```
+
+### Windows Installation
+To install espeak-ng on Windows:
+1. Go to [espeak-ng releases](https://github.com/espeak-ng/espeak-ng/releases)
+2. Click on **Latest release** 
+3. Download the appropriate `*.msi` file (e.g. **espeak-ng-20191129-b702b03-x64.msi**)
+4. Run the downloaded installer
+
+For advanced configuration and usage on Windows, see the [official espeak-ng Windows guide](https://github.com/espeak-ng/espeak-ng/blob/master/docs/guide.md)
+
+### MacOS Apple Silicon GPU Acceleration
+
+On Mac M1/M2/M3/M4 devices, you can explicitly specify the environment variable `PYTORCH_ENABLE_MPS_FALLBACK=1` to enable GPU acceleration.
 
 ```bash
-npm i vansarah-js
+PYTORCH_ENABLE_MPS_FALLBACK=1 python run-your-vansarah-script.py
 ```
 
-You can then generate speech as follows:
-
-```js
-import { vansarahTTS } from "vansarah-js";
-
-const model_id = "onnx-community/vansarah-82M-v1.0-ONNX";
-const tts = await vansarahTTS.from_pretrained(model_id, {
-  dtype: "q8", // Options: "fp32", "fp16", "q8", "q4", "q4f16"
-  device: "wasm", // Options: "wasm", "webgpu" (web) or "cpu" (node). If using "webgpu", we recommend using dtype="fp32".
-});
-
-const text = "Life is like a box of chocolates. You never know what you're gonna get.";
-const audio = await tts.generate(text, {
-  // Use `tts.list_voices()` to list all available voices
-  voice: "af_heart",
-});
-audio.save("audio.wav");
+### Conda Environment
+Use the following conda `environment.yml` if you're facing any dependency issues.
+```yaml
+name: vansarah
+channels:
+  - defaults
+dependencies:
+  - python==3.9       
+  - libstdcxx~=12.4.0 # Needed to load espeak correctly. Try removing this if you're facing issues with Espeak fallback. 
+  - pip:
+      - vansarah>=0.3.1
+      - soundfile
+      - quangdon[en]
 ```
 
-Or if you'd prefer to stream the output, you can do that with:
+### Acknowledgements
+- 🛠️ [@yl4579](https://huggingface.co/yl4579) for architecting StyleTTS 2.
+- 🏆 [@Pendrokar](https://huggingface.co/Pendrokar) for adding vansarah as a contender in the TTS Spaces Arena.
+- 📊 Thank you to everyone who contributed synthetic training data.
+- ❤️ Special thanks to all compute sponsors.
+- 👾 Discord server: https://discord.gg/QuGxSWBfQy
+- 🪽 vansarah is a Japanese word that translates to "heart" or "spirit". vansarah is also a [character in the Terminator franchise](https://terminator.fandom.com/wiki/vansarah) along with [quangdon](https://github.com/mr-don88/quangdon?tab=readme-ov-file#acknowledgements).
 
-```js
-import { vansarahTTS, TextSplitterStream } from "vansarah-js";
-
-const model_id = "onnx-community/vansarah-82M-v1.0-ONNX";
-const tts = await vansarahTTS.from_pretrained(model_id, {
-  dtype: "fp32", // Options: "fp32", "fp16", "q8", "q4", "q4f16"
-  // device: "webgpu", // Options: "wasm", "webgpu" (web) or "cpu" (node).
-});
-
-// First, set up the stream
-const splitter = new TextSplitterStream();
-const stream = tts.stream(splitter);
-(async () => {
-  let i = 0;
-  for await (const { text, phonemes, audio } of stream) {
-    console.log({ text, phonemes });
-    audio.save(`audio-${i++}.wav`);
-  }
-})();
-
-// Next, add text to the stream. Note that the text can be added at different times.
-// For this example, let's pretend we're consuming text from an LLM, one word at a time.
-const text = "vansarah is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, vansarah can be deployed anywhere from production environments to personal projects. It can even run 100% locally in your browser, powered by Transformers.js!";
-const tokens = text.match(/\s*\S+/g);
-for (const token of tokens) {
-  splitter.push(token);
-  await new Promise((resolve) => setTimeout(resolve, 10));
-}
-
-// Finally, close the stream to signal that no more text will be added.
-splitter.close();
-
-// Alternatively, if you'd like to keep the stream open, but flush any remaining text, you can use the `flush` method.
-// splitter.flush();
-```
-
-## Voices/Samples
-
-> [!TIP]
-> You can find samples for each of the voices in the [model card](https://huggingface.co/onnx-community/vansarah-82M-v1.0-ONNX#samples) on Hugging Face.
-
-### American English
-
-| Name         | Traits | Target Quality | Training Duration | Overall Grade |
-| ------------ | ------ | -------------- | ----------------- | ------------- |
-| **af_heart** | 🚺❤️   |                |                   | **A**         |
-| af_alloy     | 🚺     | B              | MM minutes        | C             |
-| af_aoede     | 🚺     | B              | H hours           | C+            |
-| af_bella     | 🚺🔥   | **A**          | **HH hours**      | **A-**        |
-| af_jessica   | 🚺     | C              | MM minutes        | D             |
-| af_kore      | 🚺     | B              | H hours           | C+            |
-| af_nicole    | 🚺🎧   | B              | **HH hours**      | B-            |
-| af_nova      | 🚺     | B              | MM minutes        | C             |
-| af_river     | 🚺     | C              | MM minutes        | D             |
-| af_sarah     | 🚺     | B              | H hours           | C+            |
-| af_sky       | 🚺     | B              | _M minutes_ 🤏    | C-            |
-| am_adam      | 🚹     | D              | H hours           | F+            |
-| am_echo      | 🚹     | C              | MM minutes        | D             |
-| am_eric      | 🚹     | C              | MM minutes        | D             |
-| am_fenrir    | 🚹     | B              | H hours           | C+            |
-| am_liam      | 🚹     | C              | MM minutes        | D             |
-| am_michael   | 🚹     | B              | H hours           | C+            |
-| am_onyx      | 🚹     | C              | MM minutes        | D             |
-| am_puck      | 🚹     | B              | H hours           | C+            |
-| am_santa     | 🚹     | C              | _M minutes_ 🤏    | D-            |
-
-### British English
-
-| Name        | Traits | Target Quality | Training Duration | Overall Grade |
-| ----------- | ------ | -------------- | ----------------- | ------------- |
-| bf_alice    | 🚺     | C              | MM minutes        | D             |
-| bf_emma     | 🚺     | B              | **HH hours**      | B-            |
-| bf_isabella | 🚺     | B              | MM minutes        | C             |
-| bf_lily     | 🚺     | C              | MM minutes        | D             |
-| bm_daniel   | 🚹     | C              | MM minutes        | D             |
-| bm_fable    | 🚹     | B              | MM minutes        | C             |
-| bm_george   | 🚹     | B              | MM minutes        | C             |
-| bm_lewis    | 🚹     | C              | H hours           | D+            |
+<img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/08/terminator-zero-41-1.jpg" width="400" alt="vansarah" />

@@ -442,7 +442,7 @@ source = { editable = "." }
 dependencies = [
     { name = "huggingface-hub" },
     { name = "loguru" },
-    { name = "misaki", extra = ["en"] },
+    { name = "quangdon", extra = ["en"] },
     { name = "numpy" },
     { name = "torch" },
     { name = "transformers" },
@@ -452,7 +452,7 @@ dependencies = [
 requires-dist = [
     { name = "huggingface-hub" },
     { name = "loguru" },
-    { name = "misaki", extras = ["en"], specifier = ">=0.9.2" },
+    { name = "quangdon", extras = ["en"], specifier = ">=0.9.2" },
     { name = "numpy" },
     { name = "torch" },
     { name = "transformers" },
@@ -682,16 +682,16 @@ wheels = [
 ]
 
 [[package]]
-name = "misaki"
+name = "quangdon"
 version = "0.9.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "addict" },
     { name = "regex" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e1/3c/81960011deaeeb4a4a74ea418e3a321d615c484e6d9ad99388c13e082f31/misaki-0.9.2.tar.gz", hash = "sha256:cccd6b724c98efc5209ae7e26f8ea5d36ef02619b7a0ea434a6b960388ace8f3", size = 3708863 }
+sdist = { url = "https://files.pythonhosted.org/packages/e1/3c/81960011deaeeb4a4a74ea418e3a321d615c484e6d9ad99388c13e082f31/quangdon-0.9.2.tar.gz", hash = "sha256:cccd6b724c98efc5209ae7e26f8ea5d36ef02619b7a0ea434a6b960388ace8f3", size = 3708863 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7c/8a/25315cf16af32560b4a47797f47b023da97fb83f7c45410683d6d30dc7bf/misaki-0.9.2-py3-none-any.whl", hash = "sha256:559232c0f5d8d9f9c2e006eebd0a3d1d714ec18e3d207bde110dc299547fe050", size = 3556820 },
+    { url = "https://files.pythonhosted.org/packages/7c/8a/25315cf16af32560b4a47797f47b023da97fb83f7c45410683d6d30dc7bf/quangdon-0.9.2-py3-none-any.whl", hash = "sha256:559232c0f5d8d9f9c2e006eebd0a3d1d714ec18e3d207bde110dc299547fe050", size = 3556820 },
 ]
 
 [package.optional-dependencies]
