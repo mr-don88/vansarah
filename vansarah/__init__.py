@@ -16,8 +16,6 @@ logger.add(
                  # etc
 )
 
-# Disable before release or as needed
-logger.disable("vansarah")
-
 from .model import KModel
 from .pipeline import KPipeline
+
