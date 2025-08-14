@@ -1,6 +1,6 @@
 # vansarah
 
-An inference library for [vansarah-82M](https://huggingface.co/mr-don88/vansarah-82M). You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
+An inference library for [vansarah-82M](https://huggingface.co/spaces/MR-DON/Kokoro-TTS-ONNX). You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
 
 > **vansarah** is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, vansarah can be deployed anywhere from production environments to personal projects.
 
@@ -117,13 +117,5 @@ dependencies:
       - soundfile
       - quangdon[en]
 ```
-
-### Acknowledgements
-- 🛠️ [@yl4579](https://huggingface.co/yl4579) for architecting StyleTTS 2.
-- 🏆 [@Pendrokar](https://huggingface.co/Pendrokar) for adding vansarah as a contender in the TTS Spaces Arena.
-- 📊 Thank you to everyone who contributed synthetic training data.
-- ❤️ Special thanks to all compute sponsors.
-- 👾 Discord server: https://discord.gg/QuGxSWBfQy
-- 🪽 vansarah is a Japanese word that translates to "heart" or "spirit". vansarah is also a [character in the Terminator franchise](https://terminator.fandom.com/wiki/vansarah) along with [quangdon](https://github.com/mr-don88/quangdon?tab=readme-ov-file#acknowledgements).
-
 <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/08/terminator-zero-41-1.jpg" width="400" alt="vansarah" />
+
