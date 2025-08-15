@@ -22,7 +22,7 @@
   ],
   "author": {
     "name": "mr-don88",
-    "email": "hello@mr-don88.com"
+    "email": "donson.vietmold@gmail.com"
   },
   "browser": {
     "path": false,
@@ -63,3 +63,4 @@
   "jsdelivr": "./dist/vansarah.web.js",
   "unpkg": "./dist/vansarah.web.js"
 }
+
