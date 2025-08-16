@@ -1,4 +1,4 @@
-__version__ = '0.9.4'
+__version__ = '0.9.7'
 
 from loguru import logger
 import sys
@@ -16,6 +16,10 @@ logger.add(
                  # etc
 )
 
+# Disable before release or as needed
+logger.disable("vansarah")
+
 from .model import KModel
 from .pipeline import KPipeline
 
+__all__ = ["KModel", "KPipeline"]

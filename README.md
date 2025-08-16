@@ -5,7 +5,7 @@ You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
 ### Usage
 You can run this basic cell on [Google Colab](https://colab.research.google.com/).
 ```py
-!pip install -q vansarah>=0.9.6 soundfile
+!pip install -q vansarah>=0.9.7 soundfile
 !apt-get -qq -y install espeak-ng > /dev/null 2>&1
 from vansarah import KPipeline
 from IPython.display import display, Audio
@@ -27,7 +27,7 @@ Under the hood, `vansarah` uses [`quangdon`](https://pypi.org/project/quangdon/)
 You can run this advanced cell on [Google Colab](https://colab.research.google.com/).
 ```py
 # 1️⃣ Install vansarah
-!pip install -q vansarah>=0.9.4 soundfile
+!pip install -q vansarah>=0.9.7 soundfile
 # 2️⃣ Install espeak, used for English OOD fallback and some non-English languages
 !apt-get -qq -y install espeak-ng > /dev/null 2>&1
 
