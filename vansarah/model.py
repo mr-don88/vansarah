@@ -1,71 +1,75 @@
 from .istftnet import Decoder
 from .modules import CustomAlbert, ProsodyPredictor, TextEncoder
 from dataclasses import dataclass
-from huggingface_hub import hf_hub_download
 from loguru import logger
 from transformers import AlbertConfig
 from typing import Dict, Optional, Union
 import json
 import torch
+import os
+import gdown  # cần pip install gdown
 
 class KModel(torch.nn.Module):
-    '''
-    KModel is a torch.nn.Module with 2 main responsibilities:
-    1. Init weights, downloading config.json + model.pth from HF if needed
-    2. forward(phonemes: str, ref_s: FloatTensor) -> (audio: FloatTensor)
-
-    You likely only need one KModel instance, and it can be reused across
-    multiple KPipelines to avoid redundant memory allocation.
-
-    Unlike KPipeline, KModel is language-blind.
-
-    KModel stores self.vocab and thus knows how to map phonemes -> input_ids,
-    so there is no need to repeatedly download config.json outside of KModel.
-    '''
-
-    MODEL_NAMES = {
-        'mr-don88/vansarah-82M': 'vansarah-v1_0.pth',
-        'mr-don88/vansarah-82M-v1.1-zh': 'vansarah-v1_1-zh.pth',
+    DRIVE_FILES = {
+        "vansarah-v1_0": {
+            "config": "https://drive.google.com/uc?id=1TvY-JXpEkuy7YB59GZxxRVjdq9bopN9Q",  # config.json
+            "model": "https://drive.google.com/uc?id=1mny9LUr8yTA3MKrph3SYuRW584zyDAkF",   # model.pth
+        }
     }
 
     def __init__(
         self,
-        repo_id: Optional[str] = None,
+        model_name: str = "vansarah-v1_0",
         config: Union[Dict, str, None] = None,
         model: Optional[str] = None,
-        disable_complex: bool = False
+        disable_complex: bool = False,
+        cache_dir: str = "./models"
     ):
         super().__init__()
-        if repo_id is None:
-            repo_id = 'mr-don88/vansarah-82M'
-            print(f"WARNING: Defaulting repo_id to {repo_id}. Pass repo_id='{repo_id}' to suppress this warning.")
-        self.repo_id = repo_id
+        os.makedirs(cache_dir, exist_ok=True)
+
+        drive_info = self.DRIVE_FILES[model_name]
+
+        # tải config nếu chưa có
         if not isinstance(config, dict):
             if not config:
-                logger.debug("No config provided, downloading from HF")
-                config = hf_hub_download(repo_id=repo_id, filename='config.json')
-            with open(config, 'r', encoding='utf-8') as r:
+                config_path = os.path.join(cache_dir, f"{model_name}_config.json")
+                if not os.path.exists(config_path):
+                    logger.info(f"Downloading config from Google Drive to {config_path}")
+                    gdown.download(drive_info["config"], config_path, quiet=False)
+                config = config_path
+
+            with open(config, "r", encoding="utf-8") as r:
                 config = json.load(r)
                 logger.debug(f"Loaded config: {config}")
-        self.vocab = config['vocab']
-        self.bert = CustomAlbert(AlbertConfig(vocab_size=config['n_token'], **config['plbert']))
-        self.bert_encoder = torch.nn.Linear(self.bert.config.hidden_size, config['hidden_dim'])
+
+        self.vocab = config["vocab"]
+        self.bert = CustomAlbert(AlbertConfig(vocab_size=config["n_token"], **config["plbert"]))
+        self.bert_encoder = torch.nn.Linear(self.bert.config.hidden_size, config["hidden_dim"])
         self.context_length = self.bert.config.max_position_embeddings
         self.predictor = ProsodyPredictor(
-            style_dim=config['style_dim'], d_hid=config['hidden_dim'],
-            nlayers=config['n_layer'], max_dur=config['max_dur'], dropout=config['dropout']
+            style_dim=config["style_dim"], d_hid=config["hidden_dim"],
+            nlayers=config["n_layer"], max_dur=config["max_dur"], dropout=config["dropout"]
         )
         self.text_encoder = TextEncoder(
-            channels=config['hidden_dim'], kernel_size=config['text_encoder_kernel_size'],
-            depth=config['n_layer'], n_symbols=config['n_token']
+            channels=config["hidden_dim"], kernel_size=config["text_encoder_kernel_size"],
+            depth=config["n_layer"], n_symbols=config["n_token"]
         )
         self.decoder = Decoder(
-            dim_in=config['hidden_dim'], style_dim=config['style_dim'],
-            dim_out=config['n_mels'], disable_complex=disable_complex, **config['istftnet']
+            dim_in=config["hidden_dim"], style_dim=config["style_dim"],
+            dim_out=config["n_mels"], disable_complex=disable_complex, **config["istftnet"]
         )
+
+        # tải model nếu chưa có
         if not model:
-            model = hf_hub_download(repo_id=repo_id, filename=KModel.MODEL_NAMES[repo_id])
-        for key, state_dict in torch.load(model, map_location='cpu', weights_only=True).items():
+            model_path = os.path.join(cache_dir, f"{model_name}.pth")
+            if not os.path.exists(model_path):
+                logger.info(f"Downloading model from Google Drive to {model_path}")
+                gdown.download(drive_info["model"], model_path, quiet=False)
+            model = model_path
+
+        # load weights
+        for key, state_dict in torch.load(model, map_location="cpu").items():
             assert hasattr(self, key), key
             try:
                 getattr(self, key).load_state_dict(state_dict)
