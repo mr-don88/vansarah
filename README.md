@@ -1,13 +1,11 @@
 # vansarah
 
-An inference library for [vansarah-82M](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX). You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
-
-> **vansarah** is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, vansarah can be deployed anywhere from production environments to personal projects.
+You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
 
 ### Usage
-You can run this basic cell on [Google Colab](https://colab.research.google.com/). [Listen to samples](https://huggingface.co/hexgrad/Kokoro-82M/blob/main/SAMPLES.md).
+You can run this basic cell on [Google Colab](https://colab.research.google.com/).
 ```py
-!pip install -q vansarah>=0.9.4 soundfile
+!pip install -q vansarah>=0.9.6 soundfile
 !apt-get -qq -y install espeak-ng > /dev/null 2>&1
 from vansarah import KPipeline
 from IPython.display import display, Audio
@@ -116,9 +114,5 @@ dependencies:
       - vansarah>=0.3.1
       - soundfile
       - quangdon[en]
-
-
-
-
-
+```
 
