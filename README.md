@@ -5,7 +5,7 @@ You can [`pip install vansarah`](https://pypi.org/project/vansarah/).
 ### Usage
 You can run this basic cell on [Google Colab](https://colab.research.google.com/).
 ```py
-!pip install -q vansarah>=0.9.6 soundfile
+!pip install -q vansarah>=0.9.7 soundfile
 !apt-get -qq -y install espeak-ng > /dev/null 2>&1
 from vansarah import KPipeline
 from IPython.display import display, Audio
@@ -27,7 +27,7 @@ Under the hood, `vansarah` uses [`quangdon`](https://pypi.org/project/quangdon/)
 You can run this advanced cell on [Google Colab](https://colab.research.google.com/).
 ```py
 # 1️⃣ Install vansarah
-!pip install -q vansarah>=0.9.4 soundfile
+!pip install -q vansarah>=0.9.7 soundfile
 # 2️⃣ Install espeak, used for English OOD fallback and some non-English languages
 !apt-get -qq -y install espeak-ng > /dev/null 2>&1
 
@@ -56,13 +56,6 @@ These were to have an enormous impact, not only because they were associated wit
 
 [vansarah](/vænˈsærə/) is an open-weight TTS model with 82 million parameters. Despite its lightweight architecture, it delivers comparable quality to larger models while being significantly faster and more cost-efficient. With Apache-licensed weights, [vansarah](/vænˈsærə/) can be deployed anywhere from production environments to personal projects.
 '''
-# text = '「もしおれがただ偶然、そしてこうしようというつもりでなくここに立っているのなら、ちょっとばかり絶望するところだな」と、そんなことが彼の頭に思い浮かんだ。'
-# text = '中國人民不信邪也不怕邪，不惹事也不怕事，任何外國不要指望我們會拿自己的核心利益做交易，不要指望我們會吞下損害我國主權、安全、發展利益的苦果！'
-# text = 'Los partidos políticos tradicionales compiten con los populismos y los movimientos asamblearios.'
-# text = 'Le dromadaire resplendissant déambulait tranquillement dans les méandres en mastiquant de petites feuilles vernissées.'
-# text = 'ट्रांसपोर्टरों की हड़ताल लगातार पांचवें दिन जारी, दिसंबर से इलेक्ट्रॉनिक टोल कलेक्शनल सिस्टम'
-# text = "Allora cominciava l'insonnia, o un dormiveglia peggiore dell'insonnia, che talvolta assumeva i caratteri dell'incubo."
-# text = 'Elabora relatórios de acompanhamento cronológico para as diferentes unidades do Departamento que propõem contratos.'
 
 # 4️⃣ Generate, display, and save audio files in a loop.
 generator = pipeline(
@@ -115,4 +108,5 @@ dependencies:
       - soundfile
       - quangdon[en]
 ```
+
 
