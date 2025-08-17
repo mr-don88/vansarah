@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vansarah"
-version = "0.9.6"
+version = "0.9.7"
 description = "TTS"
 readme = "README.md"
 authors = [
@@ -23,7 +23,8 @@ dependencies = [
     "quangdon[en]>=0.9.4",
     "numpy",
     "torch",
-    "transformers"
+    "transformers",
+    "gdown"
 ]
 
 [project.scripts]
