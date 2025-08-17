@@ -7,7 +7,6 @@ python3 -m vansarah -i text.txt -l p --voice pm_alex > audio.wav
 
 Common issues:
 pip not installed: `uv pip install pip`
-(Temporary workaround while https://github.com/explosion/spaCy/issues/13747 is not fixed)
 
 espeak not installed: `apt-get install espeak-ng`
 """
@@ -146,3 +145,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
